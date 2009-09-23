@@ -30,6 +30,8 @@ namespace secret_listener
 
 PacketDevice::PacketDevice(const std::string& device) : name(device)
 {
+	char pcap_errorbuf[PCAP_ERRBUF_SIZE + 1] = "";
+
 	// [bgh] false == not promiscuous mode
 	if (!(pcap_handle = pcap_open_live(device.c_str(), MAX_SNAPLEN, false, 0, pcap_errorbuf)))
 	{
@@ -43,6 +45,8 @@ PacketDevice::PacketDevice(const std::string& device) : name(device)
 void
 PacketDevice::setPacketFilter(const std::string& filter)
 {
+	char pcap_errorbuf[PCAP_ERRBUF_SIZE + 1] = "";
+
 	bpf_u_int32 device_netmask;
 	bpf_u_int32 device_ip;
 	struct bpf_program compiled_filter;

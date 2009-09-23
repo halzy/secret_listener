@@ -35,8 +35,6 @@ struct pcap_lookupnet_error: virtual boost::exception, virtual std::exception{};
 struct pcap_compile_error: virtual boost::exception, virtual std::exception{};
 struct pcap_setfilter_error: virtual boost::exception, virtual std::exception{};
 
-static char pcap_errorbuf[PCAP_ERRBUF_SIZE + 1] = "";
-
 }
 
 #endif /* PACKETEXCEPTIONS_H_ */

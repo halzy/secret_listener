@@ -30,6 +30,8 @@ namespace secret_listener
 
 ListDevices::ListDevices()
 {
+	char pcap_errorbuf[PCAP_ERRBUF_SIZE + 1] = "";
+
 	if(-1 == pcap_findalldevs(&all_devices, pcap_errorbuf))
 	{
 		throw pcap_open_error() << pt_error_info(std::string(pcap_errorbuf));
