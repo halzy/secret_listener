@@ -1,1 +1,3 @@
 C++ packet capture library using boost and libpcap
+
+Currently only tested on OSX 10.6

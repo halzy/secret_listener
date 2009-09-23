@@ -1,0 +1,9 @@
+
+import boost ;
+using boost : 1.40 : <root>../boost_1_40_0 ;
+boost.use-project 1.40 ;
+ 
+use-project /lib : lib ;
+build-project test ;
+build-project app ;
+

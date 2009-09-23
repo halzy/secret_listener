@@ -1,0 +1,6 @@
+
+exe ssshhh : ssshhh.cpp AppPacketReceiver.cpp Arguments.cpp ListDevices.cpp /lib//secret_listener /boost//headers
+	: <library>/boost//program_options
+	: <link>static
+	;
+
