@@ -25,10 +25,10 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapEthernet::WrapEthernet(const Wrap& envelope) :
-	ethernet(*(struct ether_header*)envelope.getPayload()),
-	payload(envelope.getPayload() + sizeof(ether_header)),
-	payload_length(envelope.getPayloadLength() - sizeof(ether_header))
+WrapEthernet::WrapEthernet(const WrapPtr& wrap) :
+	ethernet(*(struct ether_header*)wrap->getPayload()),
+	payload(wrap->getPayload() + sizeof(ether_header)),
+	payload_length(wrap->getPayloadLength() - sizeof(ether_header))
 {
 
 }

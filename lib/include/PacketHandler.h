@@ -32,7 +32,7 @@ class PacketHandler
 {
 public:
 	virtual ~PacketHandler() {}
-	virtual void onPacket(const Wrap& envelope) = 0;
+	virtual void onPacket(const WrapPtr& envelope) = 0;
 };
 
 }

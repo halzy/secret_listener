@@ -40,6 +40,7 @@ public:
 	virtual ~PacketDevice();
 	std::string deviceName() const { return name; }
 	std::string getDatalinkTypeDescription() const { return datalink_type_description; }
+	int getDatalinkType() const { return datalink_type; }
 
 private:
 	// [bgh] we do not want people to copy this object

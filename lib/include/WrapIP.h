@@ -37,7 +37,7 @@ namespace secret_listener
 class WrapIP : public virtual Wrap
 {
 public:
-	WrapIP(const Wrap& envelope);
+	WrapIP(const Wrap& wrap);
 	virtual ~WrapIP();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };

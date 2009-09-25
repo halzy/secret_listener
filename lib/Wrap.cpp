@@ -20,22 +20,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#ifndef PACKETEXCEPTIONS_H_
-#define PACKETEXCEPTIONS_H_
+#include <pcap.h>
 
-#include <string>
-#include <boost/exception/all.hpp>
+#include "Wrap.h"
+#include "PacketExceptions.h"
+#include "WrapEthernet.h"
 
 namespace secret_listener
 {
 
-typedef boost::error_info<struct listener_error_info, std::string> pt_error_info;
-struct pcap_link_type_error: virtual boost::exception, virtual std::exception{};
-struct pcap_open_error: virtual boost::exception, virtual std::exception{};
-struct pcap_lookupnet_error: virtual boost::exception, virtual std::exception{};
-struct pcap_compile_error: virtual boost::exception, virtual std::exception{};
-struct pcap_setfilter_error: virtual boost::exception, virtual std::exception{};
-
+WrapPtr getLinktypeWrapper(int link_type, const WrapPtr& wrap)
+{
+	switch(link_type)
+	{
+	case DLT_EN10MB:
+		return WrapPtr(new WrapEthernet(wrap));
+		break;
+	default:
+		throw pcap_link_type_error() << pt_error_info("No support for link type: " + link_type);
+	}
 }
 
-#endif /* PACKETEXCEPTIONS_H_ */
+}

@@ -63,13 +63,16 @@ PacketDevice::setPacketFilter(const std::string& filter)
 
 	if (pcap_setfilter(pcap_handle, &compiled_filter) == -1)
 	{
+		pcap_freecode(&compiled_filter);
 		throw pcap_setfilter_error() << pt_error_info(std::string(pcap_geterr(pcap_handle)));
 	}
+	pcap_freecode(&compiled_filter);
 }
 
 PacketDevice::~PacketDevice()
 {
 	pcap_close(pcap_handle);
+	pcap_handle = 0;
 }
 
 }

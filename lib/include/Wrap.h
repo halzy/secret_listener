@@ -24,8 +24,9 @@ THE SOFTWARE.
 #define WRAP_H_
 
 #include <sys/types.h>
-
 #include <string>
+
+#include <boost/smart_ptr.hpp>
 
 namespace secret_listener
 {
@@ -38,6 +39,9 @@ public:
 	virtual const u_int getPayloadLength() const = 0;
 	virtual const std::string toString() const = 0;
 };
+
+typedef boost::shared_ptr<Wrap> WrapPtr;
+WrapPtr getLinktypeWrapper(int link_type, const WrapPtr& wrap);
 
 }
 

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include <iostream>
 
-#include "WrapEthernet.h"
+#include "Wrap.h"
 #include "WrapIP.h"
 #include "WrapTCP.h"
 
@@ -95,12 +95,11 @@ AppPacketReceiver::~AppPacketReceiver()
 }
 
 void
-AppPacketReceiver::onPacket(Wrap const& envelope)
+AppPacketReceiver::onPacket(const WrapPtr& wrap)
 {
-	WrapEthernet ethernet(envelope);
-	WrapIP ip(ethernet);
+	WrapIP ip(*wrap.get());
 	WrapTCP tcp(ip);
-	std::cout << envelope.toString() << ethernet.toString() << ip.toString() << tcp.toString() << std::endl;
+	std::cout << wrap->toString() << ip.toString() << tcp.toString() << std::endl;
 	std::cout << "Payload hex dump:" << std::endl;
 	hexdump((void*)tcp.getPayload(), tcp.getPayloadLength());
 	std::cout << std::endl << std::endl;

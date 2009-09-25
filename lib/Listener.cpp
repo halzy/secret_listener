@@ -41,11 +41,19 @@ Listener::capture()
 	pcap_loop( pcap_device, 0, pcap_loop_callback, reinterpret_cast<u_char*>(this) );
 }
 
+void
+Listener::stop()
+{
+	pcap_breakloop( pcap_device );
+}
+
+
 
 void
-Listener::packetHandler(const WrapPcap& pcap)
+Listener::packetHandler(const WrapPtr& pcap)
 {
-	packet_handler.onPacket(pcap);
+	WrapPtr linkWrap = getLinktypeWrapper(pcap_device.getDatalinkType(), pcap);
+	packet_handler.onPacket(linkWrap);
 }
 
 Listener::~Listener()

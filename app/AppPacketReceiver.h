@@ -32,7 +32,7 @@ class AppPacketReceiver : public PacketHandler
 {
 public:
 	AppPacketReceiver();
-	void onPacket(secret_listener::Wrap const&);
+	void onPacket(const WrapPtr &envelope);
 	virtual ~AppPacketReceiver();
 };
 

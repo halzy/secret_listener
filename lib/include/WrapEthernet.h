@@ -35,7 +35,7 @@ namespace secret_listener
 class WrapEthernet : public virtual Wrap
 {
 public:
-	WrapEthernet(const Wrap& envelope);
+	WrapEthernet(const WrapPtr& envelope);
 	virtual ~WrapEthernet();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };

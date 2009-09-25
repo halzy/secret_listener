@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <pcap.h>
 
 #include "Wrap.h"
+#include "PcapPayload.h"
 
 namespace secret_listener
 {
@@ -52,7 +53,7 @@ public:
 
 private:
 	const struct pcap_pkthdr header;
-	const u_char* payload;
+	const PcapPayload payload;
 };
 
 }

@@ -20,22 +20,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#ifndef PACKETEXCEPTIONS_H_
-#define PACKETEXCEPTIONS_H_
+#ifndef PCAPPAYLOAD_H_
+#define PCAPPAYLOAD_H_
 
-#include <string>
-#include <boost/exception/all.hpp>
+#include <sys/types.h>
 
-namespace secret_listener
+class PcapPayload
 {
+public:
+	PcapPayload(size_t length, const u_char* data);
+	virtual ~PcapPayload();
 
-typedef boost::error_info<struct listener_error_info, std::string> pt_error_info;
-struct pcap_link_type_error: virtual boost::exception, virtual std::exception{};
-struct pcap_open_error: virtual boost::exception, virtual std::exception{};
-struct pcap_lookupnet_error: virtual boost::exception, virtual std::exception{};
-struct pcap_compile_error: virtual boost::exception, virtual std::exception{};
-struct pcap_setfilter_error: virtual boost::exception, virtual std::exception{};
+	operator const u_char*() const {
+		return payload;
+	}
+private:
+	// [bgh] we do not want people to copy this object
+	PcapPayload(PcapPayload const&);
+	PcapPayload& operator=(PcapPayload const&);
 
-}
+	const u_char* payload;
+};
 
-#endif /* PACKETEXCEPTIONS_H_ */
+#endif /* PCAPPAYLOAD_H_ */

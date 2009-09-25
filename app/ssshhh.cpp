@@ -24,6 +24,8 @@ THE SOFTWARE.
 #include <iostream>
 #include <boost/exception/all.hpp>
 #include <boost/program_options.hpp>
+#include <boost/smart_ptr.hpp>
+#include <signal.h>
 
 #include "ListDevices.h"
 #include "Listener.h"
@@ -34,12 +36,21 @@ THE SOFTWARE.
 
 using namespace std;
 
+typedef boost::shared_ptr<secret_listener::Listener> ListenerPtr;
+ListenerPtr listenerPtr;
+
 string create_packet_filter(const string& host, const int& port)
 {
 	std::stringstream filter_expression;
 	filter_expression << "port " << port;
 	return filter_expression.str();
 }
+
+void stop_capture(int info)
+{
+	listenerPtr->stop();
+}
+
 
 int main(int argc, char* argv[]) {
 	try {
@@ -70,8 +81,13 @@ int main(int argc, char* argv[]) {
 		cout << "Listening on device(" << args.getDevice() << ":" << device.getDatalinkTypeDescription() << ") host(" << args.getHost() << ") port (" << args.getPort() << ")" << endl << endl;
 
 		secret_listener::AppPacketReceiver receiver;
-		secret_listener::Listener listener(device, receiver);
-		listener.capture();
+		listenerPtr = ListenerPtr(new secret_listener::Listener(device, receiver));
+
+		/* control-c signal handler */
+		siginterrupt(SIGINT, 1);
+		signal(SIGINT, stop_capture);
+
+		listenerPtr->capture();
 
 	} catch (secret_listener::argument_error& e)
 	{

@@ -21,12 +21,13 @@ THE SOFTWARE.
 */
 
 #include "WrapPcap.h"
+#include "PcapPayload.h"
 
 namespace secret_listener
 {
 
 WrapPcap::WrapPcap(const struct pcap_pkthdr *header, const u_char *bytes) :
-	header(*header), payload(bytes)
+	header(*header), payload(getPayloadLength(), bytes)
 {
 
 }
