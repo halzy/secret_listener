@@ -1,3 +1,30 @@
 C++ packet capture library using boost and libpcap
 
-Currently only tested on OSX 10.6
+LICENSE:
+	Please refer to the LICENSE text file in the same directory for license information.
+
+INSTALLATION:
+1. Install the latest version of bjam (Boost Jam)
+	http://www.boost.org/
+
+	(on OSX with macports you can just do: sudo port install boost-jam)
+
+2. Clone the repo to a directory: git://github.com/halzy/secret_listener.git
+	> git clone git://github.com/halzy/secret_listener.git
+
+3. Download the latest version of boost, and unarchive it into secret_listener's parent directory
+
+4. Create a file called boost-build.jam in secret_listener's parent directory with this as it's contents:
+	boost-build ./boost_1_40_0/tools/build/v2 ;
+
+5. Correct the path in that file to point to the right directory. You'll probabaly only have to change the boost version numbers. 
+
+6. Edit the existing jamroot.jam file the secret_listener directory and change the boost version numbers and path to the version of boost you just unarchived.
+
+7. In terminal, go into the secret_listener directory and type: bjam
+
+8. Profit!
+
+
+Supported Platforms:
+	Currently only tested on OSX 10.6
