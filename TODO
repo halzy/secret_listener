@@ -1,7 +1,2 @@
-Document on how to set up the boost build settings. 
-
-Support more than just OSX.
-
-Return a collection of Wrap back to PacketReceiver.
-  
-
+* Support more than just OSX.
+* Remove the toString() from the Wrap interface and use a visitor pattern instead.
