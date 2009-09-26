@@ -44,11 +44,11 @@ private:
 	static void pcap_loop_callback(u_char *user, const struct pcap_pkthdr *header, const u_char *bytes)
 	{
 		Listener* listener = reinterpret_cast<Listener*> (user);
-		WrapPtr wrap(new WrapPcap(header, bytes));
+		WrapPtr wrap(new WrapPcap(listener->pcap_device.getDatalinkType(), header, bytes));
 		listener->packetHandler(wrap);
 	}
 
-	void packetHandler(const WrapPtr& wrap);
+	void packetHandler(WrapPtr wrap);
 
 	// [bgh] we do not want people to copy this object
 	Listener(Listener const&);

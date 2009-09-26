@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "WrapIP.h"
 #include "WrapTCP.h"
 
-#include <iostream>
+#include <list>
 
 namespace secret_listener
 {
@@ -50,10 +50,20 @@ Listener::stop()
 
 
 void
-Listener::packetHandler(const WrapPtr& pcap)
+Listener::packetHandler(WrapPtr wrap)
 {
-	WrapPtr linkWrap = getLinktypeWrapper(pcap_device.getDatalinkType(), pcap);
-	packet_handler.onPacket(linkWrap);
+	std::list<WrapPtr> wrapList;
+
+	// [bgh] add the pcap wrap to the list
+	wrapList.push_back(wrap);
+
+	while(wrap->canBuildWrap())
+	{
+		wrap = wrap->getWrap();
+		wrapList.push_back(wrap);
+	}
+
+	packet_handler.onPacket(wrapList);
 }
 
 Listener::~Listener()

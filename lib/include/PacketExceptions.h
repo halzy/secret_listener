@@ -35,6 +35,7 @@ struct pcap_open_error: virtual boost::exception, virtual std::exception{};
 struct pcap_lookupnet_error: virtual boost::exception, virtual std::exception{};
 struct pcap_compile_error: virtual boost::exception, virtual std::exception{};
 struct pcap_setfilter_error: virtual boost::exception, virtual std::exception{};
+struct wrap_unwrap_error: virtual boost::exception, virtual std::exception{};
 
 }
 

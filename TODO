@@ -2,7 +2,6 @@ Document on how to set up the boost build settings.
 
 Support more than just OSX.
 
-Currently in the process of having the lib code automatically detect and decode packets as they come in.
-
 Return a collection of Wrap back to PacketReceiver.
   
+

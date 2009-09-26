@@ -24,15 +24,18 @@ THE SOFTWARE.
 #define PACKETHANDLER_H_
 
 #include "Wrap.h"
+#include <list>
 
 namespace secret_listener
 {
+
+typedef std::list<WrapPtr> WrapList;
 
 class PacketHandler
 {
 public:
 	virtual ~PacketHandler() {}
-	virtual void onPacket(const WrapPtr& envelope) = 0;
+	virtual void onPacket(const WrapList& wrapList) = 0;
 };
 
 }

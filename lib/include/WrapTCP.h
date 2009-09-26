@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <arpa/inet.h>
 
 #include "Wrap.h"
+#include "PacketExceptions.h"
 
 namespace secret_listener
 {
@@ -36,7 +37,7 @@ namespace secret_listener
 class WrapTCP : public virtual Wrap
 {
 public:
-	WrapTCP(const Wrap& envelope);
+	WrapTCP(const Wrap* envelope);
 	virtual ~WrapTCP();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };
@@ -57,6 +58,13 @@ public:
 		tostring << "\tseq#: " << getSequenceNumber() << ", ack: " << getAckNumber() << std::endl;
 		tostring << "\tdata_offset: " << getDataOffset() << ", payload_len: " << getPayloadLength() << std::endl;
 		return tostring.str();
+	}
+
+	const bool canBuildWrap() const {
+		return false;
+	}
+	const WrapPtr getWrap() const {
+		throw wrap_unwrap_error() << pt_error_info(std::string("TCP does not know how to unwrap anything"));
 	}
 
 private:

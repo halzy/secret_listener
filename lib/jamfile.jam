@@ -4,6 +4,6 @@ lib pcap : : <name>pcap <search>/usr/lib ;
 project
 	: usage-requirements <include>include <library>pcap ;
 
-lib secret_listener : Wrap.cpp Listener.cpp PacketDevice.cpp WrapEthernet.cpp WrapIP.cpp WrapPcap.cpp WrapTCP.cpp PcapPayload.cpp /boost//headers
+lib secret_listener : Listener.cpp PacketDevice.cpp WrapEthernet.cpp WrapIP.cpp WrapPcap.cpp WrapTCP.cpp PcapPayload.cpp /boost//headers
 	: <include>include <library>pcap
 	;

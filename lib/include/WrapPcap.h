@@ -37,7 +37,7 @@ namespace secret_listener
 class WrapPcap: public virtual Wrap
 {
 public:
-	WrapPcap(const struct pcap_pkthdr *header, const u_char *bytes);
+	WrapPcap(const int& link_type, const struct pcap_pkthdr *header, const u_char *bytes);
 	virtual ~WrapPcap();
 
 	const u_char* getPayload() const { return payload; };
@@ -51,7 +51,19 @@ public:
 		return tostring.str();
 	}
 
+	const bool canBuildWrap() const {
+		switch(link_type)
+		{
+		case DLT_EN10MB:
+			return true;
+		default:
+			return false;
+		}
+	}
+	const WrapPtr getWrap() const;
+
 private:
+	const int link_type;
 	const struct pcap_pkthdr header;
 	const PcapPayload payload;
 };

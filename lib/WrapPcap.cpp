@@ -20,14 +20,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#include "Wrap.h"
 #include "WrapPcap.h"
 #include "PcapPayload.h"
+#include "PacketExceptions.h"
+#include "WrapEthernet.h"
 
 namespace secret_listener
 {
 
-WrapPcap::WrapPcap(const struct pcap_pkthdr *header, const u_char *bytes) :
-	header(*header), payload(getPayloadLength(), bytes)
+WrapPcap::WrapPcap(const int& linkType, const struct pcap_pkthdr *header, const u_char *bytes) :
+	link_type(linkType), header(*header), payload(getPayloadLength(), bytes)
 {
 
 }
@@ -35,6 +38,18 @@ WrapPcap::WrapPcap(const struct pcap_pkthdr *header, const u_char *bytes) :
 WrapPcap::~WrapPcap()
 {
 
+}
+
+const WrapPtr
+WrapPcap::getWrap() const {
+	switch(link_type)
+	{
+	case DLT_EN10MB:
+		return WrapPtr(new WrapEthernet(this));
+		break;
+	default:
+		throw wrap_unwrap_error() << pt_error_info("No support for link type: " + link_type);
+	}
 }
 
 }

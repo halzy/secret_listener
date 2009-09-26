@@ -23,6 +23,7 @@ THE SOFTWARE.
 #include "AppPacketReceiver.h"
 
 #include <iostream>
+#include <boost/foreach.hpp>
 
 #include "Wrap.h"
 #include "WrapIP.h"
@@ -95,13 +96,16 @@ AppPacketReceiver::~AppPacketReceiver()
 }
 
 void
-AppPacketReceiver::onPacket(const WrapPtr& wrap)
+AppPacketReceiver::onPacket(const WrapList& wrapList)
 {
-	WrapIP ip(*wrap.get());
-	WrapTCP tcp(ip);
-	std::cout << wrap->toString() << ip.toString() << tcp.toString() << std::endl;
+	WrapPtr lastWrap;
+	BOOST_FOREACH( WrapPtr wrap, wrapList )
+	{
+		std::cout << wrap->toString();
+		lastWrap = wrap;
+	}
 	std::cout << "Payload hex dump:" << std::endl;
-	hexdump((void*)tcp.getPayload(), tcp.getPayloadLength());
+	hexdump((void*)lastWrap->getPayload(), lastWrap->getPayloadLength());
 	std::cout << std::endl << std::endl;
 }
 

@@ -35,7 +35,7 @@ namespace secret_listener
 class WrapEthernet : public virtual Wrap
 {
 public:
-	WrapEthernet(const WrapPtr& envelope);
+	WrapEthernet(const Wrap* envelope);
 	virtual ~WrapEthernet();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };
@@ -45,6 +45,16 @@ public:
 		tostring << "Ethernet: " << std::endl << "\t type: " << getType() << std::endl;
 		return tostring.str();
 	}
+	const bool canBuildWrap() const {
+		switch(getType())
+		{
+		case ETHERTYPE_IP:
+			return true;
+		default:
+			return false;
+		}
+	}
+	const WrapPtr getWrap() const;
 private:
 	const struct ether_header ethernet;
 	const u_char* payload;
