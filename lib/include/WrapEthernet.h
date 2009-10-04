@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include <string>
 #include <sstream>
 
+#include <boost/smart_ptr/shared_ptr.hpp>
+
 #include "Wrap.h"
 
 namespace secret_listener
@@ -35,30 +37,15 @@ namespace secret_listener
 class WrapEthernet : public virtual Wrap
 {
 public:
-	WrapEthernet(const Wrap* envelope);
+	WrapEthernet(const boost::shared_ptr<Wrap> envelope);
 	virtual ~WrapEthernet();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };
 	const u_short getType() const { return ntohs(ethernet.ether_type); };
-	const std::string toString() const {
-		std::stringstream tostring;
-		tostring << "Ethernet: " << std::endl << "\t type: " << getType() << std::endl;
-		return tostring.str();
-	}
-	const bool canBuildWrap() const {
-		switch(getType())
-		{
-		case ETHERTYPE_IP:
-			return true;
-		default:
-			return false;
-		}
-	}
-	const WrapPtr getWrap() const;
 private:
-	const struct ether_header ethernet;
+	struct ether_header ethernet;
 	const u_char* payload;
-	const u_int payload_length;
+	u_int payload_length;
 };
 
 }

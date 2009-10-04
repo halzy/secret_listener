@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <string>
 
 #include <boost/smart_ptr.hpp>
+#include <boost/mpl/vector.hpp>
 
 namespace secret_listener
 {
@@ -37,14 +38,7 @@ public:
 	virtual ~Wrap() {}
 	virtual const u_char* getPayload() const = 0;
 	virtual const u_int getPayloadLength() const = 0;
-	virtual const std::string toString() const = 0;
-	virtual const bool canBuildWrap() const = 0;
-	virtual const boost::shared_ptr<Wrap> getWrap() const = 0;
 };
-
-typedef boost::shared_ptr<Wrap> WrapPtr;
-
-WrapPtr getLinktypeWrapper(int link_type, const WrapPtr& wrap);
 
 }
 

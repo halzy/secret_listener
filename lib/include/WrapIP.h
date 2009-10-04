@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <sstream>
 #include <arpa/inet.h>
 #include <netinet/ip.h>
+#include <boost/smart_ptr/shared_ptr.hpp>
 
 #include "Wrap.h"
 #include "WrapEthernet.h"
@@ -37,7 +38,7 @@ namespace secret_listener
 class WrapIP : public virtual Wrap
 {
 public:
-	WrapIP(const Wrap* wrap);
+	WrapIP(const boost::shared_ptr<Wrap> wrap);
 	virtual ~WrapIP();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };
@@ -56,30 +57,12 @@ public:
 	const std::string getSrcAddressString() const { return src_address; };
 	const std::string getDstAddressString() const { return dst_address; };
 
-	const std::string toString() const {
-		std::stringstream tostring;
-		tostring << "IP: " << std::endl << "\tsrc: " << src_address << " dst:" << dst_address << std::endl;
-		tostring << "\thead_len: " << getHeaderLength() << ", ver: " << getVersion() << std::endl;
-		tostring << "\tip_len: " << getLength() << ", payload_len: " << getPayloadLength() << std::endl;
-		return tostring.str();
-	}
-
-	const bool canBuildWrap() const {
-		switch(getProtocol())
-		{
-		case IPPROTO_TCP:
-			return true;
-		default:
-			return false;
-		}
-	}
-	const WrapPtr getWrap() const ;
 private:
-	const struct ip internet_protocol;
-	const u_char* payload;
-	const u_int payload_length;
-	const std::string dst_address;
-	const std::string src_address;
+	struct ip internet_protocol;
+	u_char* payload;
+	u_int payload_length;
+	std::string dst_address;
+	std::string src_address;
 };
 
 }

@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapIP::WrapIP(const Wrap* envelope) :
+WrapIP::WrapIP(const boost::shared_ptr<Wrap> envelope) :
 	internet_protocol(*(struct ip*) envelope->getPayload()),
 	payload((u_char *)(envelope->getPayload() + getHeaderLength()) ),
 	payload_length(envelope->getPayloadLength() - getHeaderLength()),
@@ -40,17 +40,6 @@ WrapIP::WrapIP(const Wrap* envelope) :
 WrapIP::~WrapIP()
 {
 
-}
-
-const WrapPtr
-WrapIP::getWrap() const {
-	switch(getProtocol())
-	{
-	case IPPROTO_TCP:
-		return WrapPtr(new WrapTCP(this));
-	default:
-		throw wrap_unwrap_error() << pt_error_info(std::string("IP does not know how to unwrap " + getProtocol()));
-	}
 }
 
 }

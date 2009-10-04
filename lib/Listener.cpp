@@ -21,11 +21,10 @@ THE SOFTWARE.
 */
 
 #include "Listener.h"
-#include "WrapEthernet.h"
-#include "WrapIP.h"
-#include "WrapTCP.h"
+#include "WrapBuilder.h"
+#include "WrapVariantIsA.h"
 
-#include <list>
+#include <vector>
 
 namespace secret_listener
 {
@@ -50,20 +49,26 @@ Listener::stop()
 
 
 void
-Listener::packetHandler(WrapPtr wrap)
+Listener::packetHandler(WrapVariant wrap)
 {
-	std::list<WrapPtr> wrapList;
+	WrapVariantIsA<WrapPayload> wrapIsPayload;
 
-	// [bgh] add the pcap wrap to the list
-	wrapList.push_back(wrap);
+	WrapList wrappedList;
 
-	while(wrap->canBuildWrap())
+	WrapBuilder builder;
+
+	WrapVariant wrapped = wrap;
+
+	while(!boost::apply_visitor( wrapIsPayload, wrapped) )
 	{
-		wrap = wrap->getWrap();
-		wrapList.push_back(wrap);
+		wrappedList.push_back(wrapped);
+		wrapped = boost::apply_visitor( builder, wrapped);
 	}
 
-	packet_handler.onPacket(wrapList);
+	// [bgh] add the last one to the list
+	wrappedList.push_back(wrapped);
+
+	packet_handler.onPacket(wrappedList);
 }
 
 Listener::~Listener()

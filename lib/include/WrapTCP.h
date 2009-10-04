@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <sstream>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
+#include <boost/smart_ptr/shared_ptr.hpp>
 
 #include "Wrap.h"
 #include "PacketExceptions.h"
@@ -37,7 +38,7 @@ namespace secret_listener
 class WrapTCP : public virtual Wrap
 {
 public:
-	WrapTCP(const Wrap* envelope);
+	WrapTCP(const boost::shared_ptr<Wrap> envelope);
 	virtual ~WrapTCP();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };
@@ -52,25 +53,10 @@ public:
 	const u_short getChecksum() const { return ntohl(tcp_header.th_sum); };
 	const u_short getUrgentPointer() const { return ntohl(tcp_header.th_urp); };
 
-	const std::string toString() const {
-		std::stringstream tostring;
-		tostring << "TCP: " << std::endl << "\tsrc_port: " << getSrcPort() << " dst_port:" << getDstPort() << std::endl;
-		tostring << "\tseq#: " << getSequenceNumber() << ", ack: " << getAckNumber() << std::endl;
-		tostring << "\tdata_offset: " << getDataOffset() << ", payload_len: " << getPayloadLength() << std::endl;
-		return tostring.str();
-	}
-
-	const bool canBuildWrap() const {
-		return false;
-	}
-	const WrapPtr getWrap() const {
-		throw wrap_unwrap_error() << pt_error_info(std::string("TCP does not know how to unwrap anything"));
-	}
-
 private:
-	const tcphdr tcp_header;
+	tcphdr tcp_header;
 	const u_char* payload;
-	const u_int payload_length;
+	u_int payload_length;
 };
 
 }

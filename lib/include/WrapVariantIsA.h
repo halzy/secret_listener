@@ -20,48 +20,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#ifndef WRAPPCAP_H_
-#define WRAPPCAP_H_
+#ifndef WRAPVARIANTISA_H_
+#define WRAPVARIANTISA_H_
 
-#include <string>
-#include <sstream>
+#include <boost/type_traits/is_same.hpp>
 
-#include <pcap.h>
-
-#include "Wrap.h"
-#include "PcapPayload.h"
+#include "WrapPcap.h"
+#include "WrapEthernet.h"
+#include "WrapIP.h"
+#include "WrapTCP.h"
+#include "WrapPayload.h"
 
 namespace secret_listener
 {
 
-class WrapPcap: public virtual Wrap
+template<typename T>
+class WrapVariantIsA : public boost::static_visitor<bool>
 {
 public:
-	WrapPcap(const int& link_type, const struct pcap_pkthdr *header, const u_char *bytes);
-	virtual ~WrapPcap();
+	WrapVariantIsA() {};
+	~WrapVariantIsA() {};
 
-	const u_char* getPayload() const { return payload; };
-	const u_int getPayloadLength() const { return header.caplen; };
-	const u_int getPacketLength() const { return header.len; };
-	const struct timeval getTime() const { return header.ts; };
-	const int getLinkType() const { return link_type; };
+	bool operator()(boost::shared_ptr<WrapPcap>& pcap) const
+	{ return (boost::is_same<T, WrapPcap>::value); }
+	bool operator()(boost::shared_ptr<WrapEthernet>& ether) const
+	{ return (boost::is_same<T, WrapEthernet>::value); }
+	bool operator()(boost::shared_ptr<WrapIP>& ip) const
+	{ return (boost::is_same<T, WrapIP>::value); }
+	bool operator()(boost::shared_ptr<WrapTCP>& tcp) const
+	{ return (boost::is_same<T, WrapTCP>::value); }
+	bool operator()(boost::shared_ptr<WrapPayload>& tcp) const
+	{ return (boost::is_same<T, WrapPayload>::value); }
 
-	const bool canBuildWrap() const {
-		switch(link_type)
-		{
-		case DLT_EN10MB:
-			return true;
-		default:
-			return false;
-		}
-	}
-
-private:
-	int link_type;
-	struct pcap_pkthdr header;
-	PcapPayload payload;
 };
 
 }
 
-#endif /* WRAPPCAP_H_ */
+#endif /* WRAPVARIANTISA_H_ */

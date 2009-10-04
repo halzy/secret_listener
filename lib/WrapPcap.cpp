@@ -40,16 +40,4 @@ WrapPcap::~WrapPcap()
 
 }
 
-const WrapPtr
-WrapPcap::getWrap() const {
-	switch(link_type)
-	{
-	case DLT_EN10MB:
-		return WrapPtr(new WrapEthernet(this));
-		break;
-	default:
-		throw wrap_unwrap_error() << pt_error_info("No support for link type: " + link_type);
-	}
-}
-
 }

@@ -20,48 +20,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#ifndef WRAPPCAP_H_
-#define WRAPPCAP_H_
-
-#include <string>
-#include <sstream>
-
-#include <pcap.h>
-
-#include "Wrap.h"
-#include "PcapPayload.h"
+#ifndef WRAPPAYLOAD_H_
+#define WRAPPAYLOAD_H_
 
 namespace secret_listener
 {
 
-class WrapPcap: public virtual Wrap
+class WrapPayload : public virtual Wrap
 {
 public:
-	WrapPcap(const int& link_type, const struct pcap_pkthdr *header, const u_char *bytes);
-	virtual ~WrapPcap();
+
+	WrapPayload(const boost::shared_ptr<Wrap> wrap) : payload(wrap->getPayload()), payload_length(wrap->getPayloadLength()) {}
+	~WrapPayload() {};
 
 	const u_char* getPayload() const { return payload; };
-	const u_int getPayloadLength() const { return header.caplen; };
-	const u_int getPacketLength() const { return header.len; };
-	const struct timeval getTime() const { return header.ts; };
-	const int getLinkType() const { return link_type; };
-
-	const bool canBuildWrap() const {
-		switch(link_type)
-		{
-		case DLT_EN10MB:
-			return true;
-		default:
-			return false;
-		}
-	}
+	const u_int getPayloadLength() const { return payload_length; };
 
 private:
-	int link_type;
-	struct pcap_pkthdr header;
-	PcapPayload payload;
+	const u_char* payload;
+	u_int payload_length;
 };
 
 }
 
-#endif /* WRAPPCAP_H_ */
+#endif /* WRAPPAYLOAD_H_ */

@@ -26,6 +26,7 @@
 #include "PacketDevice.h"
 #include "WrapPcap.h"
 #include "PacketHandler.h"
+#include "WrapVariant.h"
 
 namespace secret_listener
 {
@@ -44,11 +45,11 @@ private:
 	static void pcap_loop_callback(u_char *user, const struct pcap_pkthdr *header, const u_char *bytes)
 	{
 		Listener* listener = reinterpret_cast<Listener*> (user);
-		WrapPtr wrap(new WrapPcap(listener->pcap_device.getDatalinkType(), header, bytes));
+		WrapVariant wrap = boost::shared_ptr<WrapPcap>(new WrapPcap(listener->pcap_device.getDatalinkType(), header, bytes));
 		listener->packetHandler(wrap);
 	}
 
-	void packetHandler(WrapPtr wrap);
+	void packetHandler(WrapVariant wrap);
 
 	// [bgh] we do not want people to copy this object
 	Listener(Listener const&);
@@ -56,8 +57,7 @@ private:
 
 	const PacketDevice& pcap_device;
 	PacketHandler& packet_handler;
-}
-;
+};
 
 }
 

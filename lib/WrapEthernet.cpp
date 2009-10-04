@@ -23,30 +23,19 @@ THE SOFTWARE.
 #include "WrapEthernet.h"
 #include "PacketExceptions.h"
 
+#include "Wrap.h"
 #include "WrapIP.h"
 
 namespace secret_listener
 {
 
-WrapEthernet::WrapEthernet(const Wrap* wrap) :
+WrapEthernet::WrapEthernet(const boost::shared_ptr<Wrap> wrap) :
 	ethernet(*(struct ether_header*)wrap->getPayload()),
 	payload(wrap->getPayload() + sizeof(ether_header)),
 	payload_length(wrap->getPayloadLength() - sizeof(ether_header))
 {
 
 }
-
-const WrapPtr
-WrapEthernet::getWrap() const {
-	switch(getType())
-	{
-	case ETHERTYPE_IP:
-		return WrapPtr(new WrapIP(this));
-	default:
-		throw wrap_unwrap_error() << pt_error_info(std::string("Ethernet does not know how to unwrap " + getType()));
-	}
-}
-
 
 WrapEthernet::~WrapEthernet()
 {

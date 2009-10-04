@@ -1,2 +1,3 @@
 * Support more than just OSX.
-* Remove the toString() from the Wrap interface and use a visitor pattern instead.
+* Examine/Clean header usage
+* Try to remove the base class Wrap, I do not like the payload functions on it. There should be some other mechanism we can use instead.

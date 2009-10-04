@@ -20,48 +20,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#ifndef WRAPPCAP_H_
-#define WRAPPCAP_H_
+#ifndef WRAPVARIANT_H_
+#define WRAPVARIANT_H_
 
-#include <string>
-#include <sstream>
+#include <boost/mpl/vector.hpp>
+#include <boost/variant.hpp>
+#include <vector>
 
-#include <pcap.h>
-
-#include "Wrap.h"
-#include "PcapPayload.h"
+#include "WrapPcap.h"
+#include "WrapEthernet.h"
+#include "WrapIP.h"
+#include "WrapTCP.h"
+#include "WrapPayload.h"
 
 namespace secret_listener
 {
+	typedef boost::mpl::vector< boost::shared_ptr<WrapPcap> > _vector_wrap_pcap;
+	typedef boost::mpl::push_front< _vector_wrap_pcap, boost::shared_ptr<WrapEthernet> >::type _vector_wrap_ethernet;
+	typedef boost::mpl::push_front< _vector_wrap_ethernet, boost::shared_ptr<WrapIP> >::type _vector_wrap_ip;
+	typedef boost::mpl::push_front< _vector_wrap_ip, boost::shared_ptr<WrapTCP> >::type _vector_wrap_tcp;
+	typedef boost::mpl::push_front< _vector_wrap_tcp, boost::shared_ptr<WrapPayload> >::type _vector_wrap_payload;
+	typedef boost::make_variant_over< _vector_wrap_payload >::type WrapVariant;
 
-class WrapPcap: public virtual Wrap
-{
-public:
-	WrapPcap(const int& link_type, const struct pcap_pkthdr *header, const u_char *bytes);
-	virtual ~WrapPcap();
-
-	const u_char* getPayload() const { return payload; };
-	const u_int getPayloadLength() const { return header.caplen; };
-	const u_int getPacketLength() const { return header.len; };
-	const struct timeval getTime() const { return header.ts; };
-	const int getLinkType() const { return link_type; };
-
-	const bool canBuildWrap() const {
-		switch(link_type)
-		{
-		case DLT_EN10MB:
-			return true;
-		default:
-			return false;
-		}
-	}
-
-private:
-	int link_type;
-	struct pcap_pkthdr header;
-	PcapPayload payload;
-};
-
+	typedef std::vector<WrapVariant> WrapList;
 }
 
-#endif /* WRAPPCAP_H_ */
+#endif /* WRAPVARIANT_H_ */

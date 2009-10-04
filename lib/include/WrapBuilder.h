@@ -20,48 +20,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#ifndef WRAPPCAP_H_
-#define WRAPPCAP_H_
+#ifndef WRAPBUILDER_H_
+#define WRAPBUILDER_H_
 
-#include <string>
-#include <sstream>
+#include <boost/variant/static_visitor.hpp>
+#include <boost/variant/apply_visitor.hpp>
 
-#include <pcap.h>
+#include <boost/smart_ptr.hpp>
 
-#include "Wrap.h"
-#include "PcapPayload.h"
+#include "WrapVariant.h"
 
 namespace secret_listener
 {
 
-class WrapPcap: public virtual Wrap
+class WrapBuilder : public boost::static_visitor<WrapVariant>
 {
 public:
-	WrapPcap(const int& link_type, const struct pcap_pkthdr *header, const u_char *bytes);
-	virtual ~WrapPcap();
+	WrapBuilder();
+	virtual ~WrapBuilder();
 
-	const u_char* getPayload() const { return payload; };
-	const u_int getPayloadLength() const { return header.caplen; };
-	const u_int getPacketLength() const { return header.len; };
-	const struct timeval getTime() const { return header.ts; };
-	const int getLinkType() const { return link_type; };
+	virtual WrapVariant operator()(boost::shared_ptr<WrapPcap> pcap);
+	virtual WrapVariant operator()(boost::shared_ptr<WrapEthernet> ether);
+	virtual WrapVariant operator()(boost::shared_ptr<WrapIP> ip);
+	virtual WrapVariant operator()(boost::shared_ptr<WrapTCP> tcp);
+	virtual WrapVariant operator()(boost::shared_ptr<WrapPayload> tcp);
 
-	const bool canBuildWrap() const {
-		switch(link_type)
-		{
-		case DLT_EN10MB:
-			return true;
-		default:
-			return false;
-		}
-	}
-
-private:
-	int link_type;
-	struct pcap_pkthdr header;
-	PcapPayload payload;
 };
 
 }
 
-#endif /* WRAPPCAP_H_ */
+#endif /* WRAPBUILDER_H_ */

@@ -24,12 +24,10 @@ THE SOFTWARE.
 #define PACKETHANDLER_H_
 
 #include "Wrap.h"
-#include <list>
+#include "WrapVariant.h"
 
 namespace secret_listener
 {
-
-typedef std::list<WrapPtr> WrapList;
 
 class PacketHandler
 {
