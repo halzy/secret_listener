@@ -38,8 +38,8 @@ WrapBuilder::~WrapBuilder()
 }
 
 
-WrapVariant
-WrapBuilder::operator()(boost::shared_ptr<WrapPcap> pcap)
+const WrapVariant
+WrapBuilder::operator()(const boost::shared_ptr<WrapPcap>& pcap) const
 {
 	switch(pcap->getLinkType())
 	{
@@ -48,9 +48,8 @@ WrapBuilder::operator()(boost::shared_ptr<WrapPcap> pcap)
 	}
 	return boost::shared_ptr<WrapPayload>(new WrapPayload(pcap->getPayload(), pcap->getPayloadLength()));
 }
-
-WrapVariant
-WrapBuilder::operator()(boost::shared_ptr<WrapEthernet> ether)
+const WrapVariant
+WrapBuilder::operator()(const boost::shared_ptr<WrapEthernet>& ether) const
 {
 	switch(ether->getType())
 	{
@@ -60,8 +59,8 @@ WrapBuilder::operator()(boost::shared_ptr<WrapEthernet> ether)
 	return boost::shared_ptr<WrapPayload>(new WrapPayload(ether->getPayload(), ether->getPayloadLength()));
 }
 
-WrapVariant
-WrapBuilder::operator()(boost::shared_ptr<WrapIP> ip)
+const WrapVariant
+WrapBuilder::operator()(const boost::shared_ptr<WrapIP>& ip) const
 {
 	switch(ip->getProtocol())
 	{
@@ -71,14 +70,14 @@ WrapBuilder::operator()(boost::shared_ptr<WrapIP> ip)
 	return boost::shared_ptr<WrapPayload>(new WrapPayload(ip->getPayload(), ip->getPayloadLength()));
 }
 
-WrapVariant
-WrapBuilder::operator()(boost::shared_ptr<WrapTCP> tcp)
+const WrapVariant
+WrapBuilder::operator()(const boost::shared_ptr<WrapTCP>& tcp) const
 {
 	return boost::shared_ptr<WrapPayload>(new WrapPayload(tcp->getPayload(), tcp->getPayloadLength()));
 }
 
-WrapVariant
-WrapBuilder::operator()(boost::shared_ptr<WrapPayload> payload)
+const WrapVariant
+WrapBuilder::operator()(const boost::shared_ptr<WrapPayload>& payload) const
 {
 	throw wrap_unwrap_error() << pt_error_info(std::string("Already at the lowest possible level."));
 }

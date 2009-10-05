@@ -38,25 +38,25 @@ namespace secret_listener
 class WrapTCP
 {
 public:
-	WrapTCP(const u_char* payload, const int& length);
+	WrapTCP(const u_char * const payload, const int& length);
 	virtual ~WrapTCP();
-	const u_char* getPayload() const { return payload; };
-	const u_int getPayloadLength() const { return payload_length; };
+	const u_char * const getPayload() const { return payload; };
+	u_int getPayloadLength() const { return payload_length; };
 
-	const u_short getSrcPort() const { return ntohs(tcp_header.th_sport); };
-	const u_short getDstPort() const { return ntohs(tcp_header.th_dport); };
-	const tcp_seq getSequenceNumber() const { return ntohl(tcp_header.th_seq); };
-	const tcp_seq getAckNumber() const { return ntohl(tcp_header.th_ack); };
-	const u_int getDataOffset() const { return tcp_header.th_off * 4; };
-	const u_char getFlags() const { return tcp_header.th_flags; };
-	const u_short getWindow() const { return ntohl(tcp_header.th_win); };
-	const u_short getChecksum() const { return ntohl(tcp_header.th_sum); };
-	const u_short getUrgentPointer() const { return ntohl(tcp_header.th_urp); };
+	u_short getSrcPort() const { return ntohs(tcp_header.th_sport); };
+	u_short getDstPort() const { return ntohs(tcp_header.th_dport); };
+	tcp_seq getSequenceNumber() const { return ntohl(tcp_header.th_seq); };
+	tcp_seq getAckNumber() const { return ntohl(tcp_header.th_ack); };
+	u_int getDataOffset() const { return tcp_header.th_off * 4; };
+	u_char getFlags() const { return tcp_header.th_flags; };
+	u_short getWindow() const { return ntohl(tcp_header.th_win); };
+	u_short getChecksum() const { return ntohl(tcp_header.th_sum); };
+	u_short getUrgentPointer() const { return ntohl(tcp_header.th_urp); };
 
 private:
-	tcphdr tcp_header;
-	const u_char* payload;
-	u_int payload_length;
+	const tcphdr tcp_header;
+	const u_char * const payload;
+	const u_int payload_length;
 };
 
 }

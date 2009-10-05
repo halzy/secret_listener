@@ -37,31 +37,31 @@ namespace secret_listener
 class WrapIP
 {
 public:
-	WrapIP(const u_char* payload, const int& length);
+	WrapIP(const u_char* const payload, const int& length);
 	virtual ~WrapIP();
-	const u_char* getPayload() const { return payload; };
-	const u_int getPayloadLength() const { return payload_length; };
+	const u_char * const getPayload() const { return payload; };
+	u_int getPayloadLength() const { return payload_length; };
 
-	const u_int getHeaderLength() const { return internet_protocol.ip_hl*4; };
-	const u_int getVersion() const { return internet_protocol.ip_v; };
-	const u_char getTOS() const { return internet_protocol.ip_tos; };
-	const u_short getLength() const { return ntohs(internet_protocol.ip_len); };
-	const u_short getID() const { return ntohs(internet_protocol.ip_id); };
-	const u_short getFragmentOffset() const { return ntohs(internet_protocol.ip_off); };
-	const u_char getTTL() const { return internet_protocol.ip_ttl; };
-	const u_char getProtocol() const { return internet_protocol.ip_p; };
-	const u_short getChecksum() const { return ntohs(internet_protocol.ip_sum); };
+	u_int getHeaderLength() const { return internet_protocol.ip_hl*4; };
+	u_int getVersion() const { return internet_protocol.ip_v; };
+	u_char getTOS() const { return internet_protocol.ip_tos; };
+	u_short getLength() const { return ntohs(internet_protocol.ip_len); };
+	u_short getID() const { return ntohs(internet_protocol.ip_id); };
+	u_short getFragmentOffset() const { return ntohs(internet_protocol.ip_off); };
+	u_char getTTL() const { return internet_protocol.ip_ttl; };
+	u_char getProtocol() const { return internet_protocol.ip_p; };
+	u_short getChecksum() const { return ntohs(internet_protocol.ip_sum); };
 	const in_addr getSrcAddress() const { return internet_protocol.ip_src; };
 	const in_addr getDstAddress() const { return internet_protocol.ip_dst; };
 	const std::string getSrcAddressString() const { return src_address; };
 	const std::string getDstAddressString() const { return dst_address; };
 
 private:
-	struct ip internet_protocol;
-	u_char* payload;
-	u_int payload_length;
-	std::string dst_address;
-	std::string src_address;
+	const struct ip internet_protocol;
+	const u_char * const payload;
+	const u_int payload_length;
+	const std::string dst_address;
+	const std::string src_address;
 };
 
 }

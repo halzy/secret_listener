@@ -39,11 +39,11 @@ public:
 	WrapBuilder();
 	virtual ~WrapBuilder();
 
-	virtual WrapVariant operator()(boost::shared_ptr<WrapPcap> pcap);
-	virtual WrapVariant operator()(boost::shared_ptr<WrapEthernet> ether);
-	virtual WrapVariant operator()(boost::shared_ptr<WrapIP> ip);
-	virtual WrapVariant operator()(boost::shared_ptr<WrapTCP> tcp);
-	virtual WrapVariant operator()(boost::shared_ptr<WrapPayload> tcp);
+	virtual const WrapVariant operator()(const boost::shared_ptr<WrapPcap>& pcap) const;
+	virtual const WrapVariant operator()(const boost::shared_ptr<WrapEthernet>& ether) const;
+	virtual const WrapVariant operator()(const boost::shared_ptr<WrapIP>& ip) const;
+	virtual const WrapVariant operator()(const boost::shared_ptr<WrapTCP>& tcp) const;
+	virtual const WrapVariant operator()(const boost::shared_ptr<WrapPayload>& tcp) const;
 
 };
 

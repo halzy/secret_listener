@@ -26,7 +26,7 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapTCP::WrapTCP(const u_char* payload, const int& length) :
+WrapTCP::WrapTCP(const u_char * const payload, const int& length) :
 	tcp_header(*(struct tcphdr*) payload),
 	payload((const u_char*)(payload + getDataOffset())),
 	payload_length(length - getDataOffset())

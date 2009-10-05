@@ -25,9 +25,9 @@ THE SOFTWARE.
 
 #include "PcapPayload.h"
 
-PcapPayload::PcapPayload(size_t length, const u_char* data)
+PcapPayload::PcapPayload(const size_t& length, const u_char * const data)
+	: payload((u_char*) malloc(length))
 {
-	payload = (u_char*) malloc(length);
 	memcpy((void*)payload, (void*)data, length);
 }
 

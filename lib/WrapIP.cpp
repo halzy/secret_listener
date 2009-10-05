@@ -27,7 +27,7 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapIP::WrapIP(const u_char* payload, const int& length) :
+WrapIP::WrapIP(const u_char* const payload, const int& length) :
 	internet_protocol(*(struct ip*) payload),
 	payload((u_char *)(payload + getHeaderLength()) ),
 	payload_length(length - getHeaderLength()),

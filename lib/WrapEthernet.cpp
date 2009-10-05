@@ -28,7 +28,7 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapEthernet::WrapEthernet(const u_char* payload, const int& length) :
+WrapEthernet::WrapEthernet(const u_char* const payload, const int& length) :
 	ethernet(*(struct ether_header*)payload),
 	payload(payload + sizeof(ether_header)),
 	payload_length(length - sizeof(ether_header))

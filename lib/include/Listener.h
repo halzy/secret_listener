@@ -42,7 +42,7 @@ public:
 
 private:
 
-	static void pcap_loop_callback(u_char *user, const struct pcap_pkthdr *header, const u_char *bytes)
+	static void pcap_loop_callback(u_char * const user, const struct pcap_pkthdr * const header, const u_char * const bytes)
 	{
 		Listener* listener = reinterpret_cast<Listener*> (user);
 		WrapVariant wrap = boost::shared_ptr<WrapPcap>(new WrapPcap(listener->pcap_device.getDatalinkType(), header, bytes));

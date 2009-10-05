@@ -36,19 +36,19 @@ namespace secret_listener
 class WrapPcap
 {
 public:
-	WrapPcap(const int& link_type, const struct pcap_pkthdr *header, const u_char *bytes);
+	WrapPcap(const int& link_type, const struct pcap_pkthdr * const header, const u_char * const bytes);
 	virtual ~WrapPcap();
 
-	const u_char* getPayload() const { return payload; };
-	const u_int getPayloadLength() const { return header.caplen; };
-	const u_int getPacketLength() const { return header.len; };
+	const u_char* const getPayload() const { return payload; };
+	u_int getPayloadLength() const { return header.caplen; };
+	u_int getPacketLength() const { return header.len; };
 	const struct timeval getTime() const { return header.ts; };
-	const int getLinkType() const { return link_type; };
+	int getLinkType() const { return link_type; };
 
 private:
-	int link_type;
+	const int link_type;
 	struct pcap_pkthdr header;
-	PcapPayload payload;
+	const PcapPayload payload;
 };
 
 }

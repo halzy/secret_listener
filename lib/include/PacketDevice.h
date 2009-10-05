@@ -34,12 +34,12 @@ class PacketDevice
 public:
 	PacketDevice(const std::string& device);
 	void setPacketFilter(const std::string& filter);
-	operator pcap_t*() const {
+	operator pcap_t * const () const {
 		return pcap_handle;
 	}
 	virtual ~PacketDevice();
-	std::string deviceName() const { return name; }
-	std::string getDatalinkTypeDescription() const { return datalink_type_description; }
+	const std::string deviceName() const { return name; }
+	const std::string getDatalinkTypeDescription() const { return datalink_type_description; }
 	int getDatalinkType() const { return datalink_type; }
 
 private:
@@ -47,7 +47,7 @@ private:
 	PacketDevice(PacketDevice const&);
 	PacketDevice& operator=(PacketDevice const&);
 
-	pcap_t* pcap_handle;
+	pcap_t * pcap_handle;
 	const std::string name;
 	int datalink_type;
 	std::string datalink_type_description;

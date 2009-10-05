@@ -45,7 +45,7 @@ AppPacketReceiver::onPacket(const WrapList& wrapList)
 	std::cout << "----------------------------------------------------------------------" << std::endl;
 	WrapPrinter printer(std::cout);
 
-	BOOST_FOREACH( WrapVariant wrap, wrapList )
+	BOOST_FOREACH( const WrapVariant& wrap, wrapList )
 	{
 		boost::apply_visitor(printer, wrap);
 	}

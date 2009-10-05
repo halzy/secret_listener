@@ -41,15 +41,15 @@ public:
 	WrapVariantIsA() {};
 	~WrapVariantIsA() {};
 
-	bool operator()(boost::shared_ptr<WrapPcap>& pcap) const
+	bool operator()(const boost::shared_ptr<WrapPcap>& pcap) const
 	{ return (boost::is_same<T, WrapPcap>::value); }
-	bool operator()(boost::shared_ptr<WrapEthernet>& ether) const
+	bool operator()(const boost::shared_ptr<WrapEthernet>& ether) const
 	{ return (boost::is_same<T, WrapEthernet>::value); }
-	bool operator()(boost::shared_ptr<WrapIP>& ip) const
+	bool operator()(const boost::shared_ptr<WrapIP>& ip) const
 	{ return (boost::is_same<T, WrapIP>::value); }
-	bool operator()(boost::shared_ptr<WrapTCP>& tcp) const
+	bool operator()(const boost::shared_ptr<WrapTCP>& tcp) const
 	{ return (boost::is_same<T, WrapTCP>::value); }
-	bool operator()(boost::shared_ptr<WrapPayload>& tcp) const
+	bool operator()(const boost::shared_ptr<WrapPayload>& tcp) const
 	{ return (boost::is_same<T, WrapPayload>::value); }
 
 };

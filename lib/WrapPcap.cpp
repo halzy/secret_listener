@@ -28,7 +28,7 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapPcap::WrapPcap(const int& linkType, const struct pcap_pkthdr *header, const u_char *bytes) :
+WrapPcap::WrapPcap(const int& linkType, const struct pcap_pkthdr * const header, const u_char * const bytes) :
 	link_type(linkType), header(*header), payload(getPayloadLength(), bytes)
 {
 

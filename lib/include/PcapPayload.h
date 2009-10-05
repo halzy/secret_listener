@@ -28,10 +28,10 @@ THE SOFTWARE.
 class PcapPayload
 {
 public:
-	PcapPayload(size_t length, const u_char* data);
+	PcapPayload(const size_t& length, const u_char * const data);
 	virtual ~PcapPayload();
 
-	operator const u_char*() const {
+	operator const u_char * const () const {
 		return payload;
 	}
 private:
@@ -39,7 +39,7 @@ private:
 	PcapPayload(PcapPayload const&);
 	PcapPayload& operator=(PcapPayload const&);
 
-	const u_char* payload;
+	const u_char* const payload;
 };
 
 #endif /* PCAPPAYLOAD_H_ */

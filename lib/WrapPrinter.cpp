@@ -90,7 +90,7 @@ WrapPrinter::~WrapPrinter()
 
 }
 void
-WrapPrinter::operator()(boost::shared_ptr<WrapPcap>& pcap) const
+WrapPrinter::operator()(const boost::shared_ptr<WrapPcap>& pcap) const
 {
 	outstream << "PCAP: " << std::endl << "\tts: " << pcap->getTime().tv_sec << "." << pcap->getTime().tv_usec << std::endl;
 	outstream << "\tcaplen: " << pcap->getPayloadLength() << ", len: " << pcap->getPacketLength() << std::endl;
@@ -98,13 +98,13 @@ WrapPrinter::operator()(boost::shared_ptr<WrapPcap>& pcap) const
 }
 
 void
-WrapPrinter::operator()(boost::shared_ptr<WrapEthernet>& ether) const
+WrapPrinter::operator()(const boost::shared_ptr<WrapEthernet>& ether) const
 {
 	outstream << "Ethernet: " << std::endl << "\t type: " << ether->getType() << std::endl;
 }
 
 void
-WrapPrinter::operator()(boost::shared_ptr<WrapIP>& ip) const
+WrapPrinter::operator()(const boost::shared_ptr<WrapIP>& ip) const
 {
 	outstream << "IP: " << std::endl << "\tsrc: " << ip->getSrcAddressString() << " dst:" << ip->getDstAddressString() << std::endl;
 	outstream << "\thead_len: " << ip->getHeaderLength() << ", ver: " << ip->getVersion() << std::endl;
@@ -112,7 +112,7 @@ WrapPrinter::operator()(boost::shared_ptr<WrapIP>& ip) const
 }
 
 void
-WrapPrinter::operator()(boost::shared_ptr<WrapTCP>& tcp) const
+WrapPrinter::operator()(const boost::shared_ptr<WrapTCP>& tcp) const
 {
 	outstream << "TCP: " << std::endl << "\tsrc_port: " << tcp->getSrcPort() << " dst_port:" << tcp->getDstPort() << std::endl;
 	outstream << "\tseq#: " << tcp->getSequenceNumber() << ", ack: " << tcp->getAckNumber() << std::endl;
@@ -120,7 +120,7 @@ WrapPrinter::operator()(boost::shared_ptr<WrapTCP>& tcp) const
 }
 
 void
-WrapPrinter::operator()(boost::shared_ptr<WrapPayload>& payload) const
+WrapPrinter::operator()(const boost::shared_ptr<WrapPayload>& payload) const
 {
 	std::cout << "Payload:" << std::endl;
 	hexdump((void*)payload->getPayload(), payload->getPayloadLength());

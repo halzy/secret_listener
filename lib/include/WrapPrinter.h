@@ -40,11 +40,11 @@ public:
 	WrapPrinter(std::ostream& stream);
 	virtual ~WrapPrinter();
 
-	virtual void operator()(boost::shared_ptr<WrapPcap>& pcap) const;
-	virtual void operator()(boost::shared_ptr<WrapEthernet>& ether) const;
-	virtual void operator()(boost::shared_ptr<WrapIP>& ip) const;
-	virtual void operator()(boost::shared_ptr<WrapTCP>& tcp) const;
-	virtual void operator()(boost::shared_ptr<WrapPayload>& tcp) const;
+	virtual void operator()(const boost::shared_ptr<WrapPcap>& pcap) const;
+	virtual void operator()(const boost::shared_ptr<WrapEthernet>& ether) const;
+	virtual void operator()(const boost::shared_ptr<WrapIP>& ip) const;
+	virtual void operator()(const boost::shared_ptr<WrapTCP>& tcp) const;
+	virtual void operator()(const boost::shared_ptr<WrapPayload>& tcp) const;
 
 private:
 	std::ostream& outstream;
