@@ -26,11 +26,11 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-class WrapPayload : public virtual Wrap
+class WrapPayload
 {
 public:
 
-	WrapPayload(const boost::shared_ptr<Wrap> wrap) : payload(wrap->getPayload()), payload_length(wrap->getPayloadLength()) {}
+	WrapPayload(const u_char* payload, const int& length) : payload(payload), payload_length(length) {}
 	~WrapPayload() {};
 
 	const u_char* getPayload() const { return payload; };

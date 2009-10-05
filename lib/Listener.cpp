@@ -52,13 +52,10 @@ void
 Listener::packetHandler(WrapVariant wrap)
 {
 	WrapVariantIsA<WrapPayload> wrapIsPayload;
-
 	WrapList wrappedList;
-
 	WrapBuilder builder;
 
 	WrapVariant wrapped = wrap;
-
 	while(!boost::apply_visitor( wrapIsPayload, wrapped) )
 	{
 		wrappedList.push_back(wrapped);
@@ -73,7 +70,7 @@ Listener::packetHandler(WrapVariant wrap)
 
 Listener::~Listener()
 {
-
+	stop();
 }
 
 }

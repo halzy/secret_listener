@@ -28,13 +28,12 @@ THE SOFTWARE.
 
 #include <pcap.h>
 
-#include "Wrap.h"
 #include "PcapPayload.h"
 
 namespace secret_listener
 {
 
-class WrapPcap: public virtual Wrap
+class WrapPcap
 {
 public:
 	WrapPcap(const int& link_type, const struct pcap_pkthdr *header, const u_char *bytes);
@@ -45,16 +44,6 @@ public:
 	const u_int getPacketLength() const { return header.len; };
 	const struct timeval getTime() const { return header.ts; };
 	const int getLinkType() const { return link_type; };
-
-	const bool canBuildWrap() const {
-		switch(link_type)
-		{
-		case DLT_EN10MB:
-			return true;
-		default:
-			return false;
-		}
-	}
 
 private:
 	int link_type;

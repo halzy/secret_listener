@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include <boost/foreach.hpp>
 #include <boost/variant/static_visitor.hpp>
 
-#include "Wrap.h"
 #include "WrapPrinter.h"
 
 namespace secret_listener

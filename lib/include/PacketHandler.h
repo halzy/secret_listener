@@ -23,7 +23,6 @@ THE SOFTWARE.
 #ifndef PACKETHANDLER_H_
 #define PACKETHANDLER_H_
 
-#include "Wrap.h"
 #include "WrapVariant.h"
 
 namespace secret_listener

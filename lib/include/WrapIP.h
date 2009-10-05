@@ -29,16 +29,15 @@ THE SOFTWARE.
 #include <netinet/ip.h>
 #include <boost/smart_ptr/shared_ptr.hpp>
 
-#include "Wrap.h"
 #include "WrapEthernet.h"
 
 namespace secret_listener
 {
 
-class WrapIP : public virtual Wrap
+class WrapIP
 {
 public:
-	WrapIP(const boost::shared_ptr<Wrap> wrap);
+	WrapIP(const u_char* payload, const int& length);
 	virtual ~WrapIP();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };

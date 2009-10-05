@@ -27,10 +27,10 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapIP::WrapIP(const boost::shared_ptr<Wrap> envelope) :
-	internet_protocol(*(struct ip*) envelope->getPayload()),
-	payload((u_char *)(envelope->getPayload() + getHeaderLength()) ),
-	payload_length(envelope->getPayloadLength() - getHeaderLength()),
+WrapIP::WrapIP(const u_char* payload, const int& length) :
+	internet_protocol(*(struct ip*) payload),
+	payload((u_char *)(payload + getHeaderLength()) ),
+	payload_length(length - getHeaderLength()),
 	dst_address(inet_ntoa(internet_protocol.ip_dst)),
 	src_address(inet_ntoa(internet_protocol.ip_src))
 {

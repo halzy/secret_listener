@@ -23,16 +23,15 @@ THE SOFTWARE.
 #include "WrapEthernet.h"
 #include "PacketExceptions.h"
 
-#include "Wrap.h"
 #include "WrapIP.h"
 
 namespace secret_listener
 {
 
-WrapEthernet::WrapEthernet(const boost::shared_ptr<Wrap> wrap) :
-	ethernet(*(struct ether_header*)wrap->getPayload()),
-	payload(wrap->getPayload() + sizeof(ether_header)),
-	payload_length(wrap->getPayloadLength() - sizeof(ether_header))
+WrapEthernet::WrapEthernet(const u_char* payload, const int& length) :
+	ethernet(*(struct ether_header*)payload),
+	payload(payload + sizeof(ether_header)),
+	payload_length(length - sizeof(ether_header))
 {
 
 }

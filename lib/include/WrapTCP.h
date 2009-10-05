@@ -28,17 +28,17 @@ THE SOFTWARE.
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <boost/smart_ptr/shared_ptr.hpp>
+#include <sys/types.h>
 
-#include "Wrap.h"
 #include "PacketExceptions.h"
 
 namespace secret_listener
 {
 
-class WrapTCP : public virtual Wrap
+class WrapTCP
 {
 public:
-	WrapTCP(const boost::shared_ptr<Wrap> envelope);
+	WrapTCP(const u_char* payload, const int& length);
 	virtual ~WrapTCP();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };

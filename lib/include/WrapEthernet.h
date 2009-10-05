@@ -29,15 +29,13 @@ THE SOFTWARE.
 
 #include <boost/smart_ptr/shared_ptr.hpp>
 
-#include "Wrap.h"
-
 namespace secret_listener
 {
 
-class WrapEthernet : public virtual Wrap
+class WrapEthernet
 {
 public:
-	WrapEthernet(const boost::shared_ptr<Wrap> envelope);
+	WrapEthernet(const u_char* payload, const int& length);
 	virtual ~WrapEthernet();
 	const u_char* getPayload() const { return payload; };
 	const u_int getPayloadLength() const { return payload_length; };

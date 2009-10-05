@@ -44,9 +44,9 @@ WrapBuilder::operator()(boost::shared_ptr<WrapPcap> pcap)
 	switch(pcap->getLinkType())
 	{
 	case DLT_EN10MB:
-		return boost::shared_ptr<WrapEthernet>(new WrapEthernet(pcap));
+		return boost::shared_ptr<WrapEthernet>(new WrapEthernet(pcap->getPayload(), pcap->getPayloadLength()));
 	}
-	return boost::shared_ptr<WrapPayload>(new WrapPayload(pcap));
+	return boost::shared_ptr<WrapPayload>(new WrapPayload(pcap->getPayload(), pcap->getPayloadLength()));
 }
 
 WrapVariant
@@ -55,9 +55,9 @@ WrapBuilder::operator()(boost::shared_ptr<WrapEthernet> ether)
 	switch(ether->getType())
 	{
 	case ETHERTYPE_IP:
-		return boost::shared_ptr<WrapIP>(new WrapIP(ether));
+		return boost::shared_ptr<WrapIP>(new WrapIP(ether->getPayload(), ether->getPayloadLength()));
 	}
-	return boost::shared_ptr<WrapPayload>(new WrapPayload(ether));
+	return boost::shared_ptr<WrapPayload>(new WrapPayload(ether->getPayload(), ether->getPayloadLength()));
 }
 
 WrapVariant
@@ -66,15 +66,15 @@ WrapBuilder::operator()(boost::shared_ptr<WrapIP> ip)
 	switch(ip->getProtocol())
 	{
 	case IPPROTO_TCP:
-		return boost::shared_ptr<WrapTCP>(new WrapTCP(ip));
+		return boost::shared_ptr<WrapTCP>(new WrapTCP(ip->getPayload(), ip->getPayloadLength()));
 	}
-	return boost::shared_ptr<WrapPayload>(new WrapPayload(ip));
+	return boost::shared_ptr<WrapPayload>(new WrapPayload(ip->getPayload(), ip->getPayloadLength()));
 }
 
 WrapVariant
 WrapBuilder::operator()(boost::shared_ptr<WrapTCP> tcp)
 {
-	return boost::shared_ptr<WrapPayload>(new WrapPayload(tcp));
+	return boost::shared_ptr<WrapPayload>(new WrapPayload(tcp->getPayload(), tcp->getPayloadLength()));
 }
 
 WrapVariant

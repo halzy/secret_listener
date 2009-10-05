@@ -26,10 +26,10 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-WrapTCP::WrapTCP(const boost::shared_ptr<Wrap> envelope) :
-	tcp_header(*(struct tcphdr*) envelope->getPayload()),
-	payload((const u_char*)(envelope->getPayload() + getDataOffset())),
-	payload_length(envelope->getPayloadLength() - getDataOffset())
+WrapTCP::WrapTCP(const u_char* payload, const int& length) :
+	tcp_header(*(struct tcphdr*) payload),
+	payload((const u_char*)(payload + getDataOffset())),
+	payload_length(length - getDataOffset())
 {
 
 }
