@@ -40,7 +40,7 @@ class WrapTCP
 public:
 	WrapTCP(const u_char * const payload, const int& length);
 	virtual ~WrapTCP();
-	const u_char * const getPayload() const { return payload; };
+	const u_char * getPayload() const { return payload; };
 	u_int getPayloadLength() const { return payload_length; };
 
 	u_short getSrcPort() const { return ntohs(tcp_header.th_sport); };

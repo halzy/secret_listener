@@ -28,10 +28,14 @@ THE SOFTWARE.
 PcapPayload::PcapPayload(const size_t& length, const u_char * const data)
 	: payload((u_char*) malloc(length))
 {
-	memcpy((void*)payload, (void*)data, length);
+	memcpy(
+			reinterpret_cast<void*>(const_cast<u_char*>(payload)),
+			reinterpret_cast<void*>(const_cast<u_char*>(data)),
+			length
+	);
 }
 
 PcapPayload::~PcapPayload()
 {
-	free((void*)payload);
+	free(reinterpret_cast<void*>(const_cast<u_char*>(payload)));
 }

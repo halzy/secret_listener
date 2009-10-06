@@ -34,7 +34,7 @@ class PacketDevice
 public:
 	PacketDevice(const std::string& device);
 	void setPacketFilter(const std::string& filter);
-	operator pcap_t * const () const {
+	operator pcap_t * () const {
 		return pcap_handle;
 	}
 	virtual ~PacketDevice();

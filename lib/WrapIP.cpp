@@ -29,8 +29,8 @@ namespace secret_listener
 
 WrapIP::WrapIP(const u_char* const payload, const int& length) :
 	internet_protocol(*(struct ip*) payload),
-	payload((u_char *)(payload + getHeaderLength()) ),
-	payload_length(length - getHeaderLength()),
+	payload( payload + getHeaderLength() ),
+	payload_length( length - getHeaderLength() ),
 	dst_address(inet_ntoa(internet_protocol.ip_dst)),
 	src_address(inet_ntoa(internet_protocol.ip_src))
 {

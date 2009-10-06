@@ -89,29 +89,31 @@ int main(int argc, char* argv[]) {
 
 		listenerPtr->capture();
 
-	} catch (secret_listener::argument_error& e)
+	} catch (const secret_listener::argument_error& e)
 	{
 		if ( string const* error_str=boost::get_error_info<secret_listener::arg_error_info>(e) )
-		{
 			cerr << *error_str << endl;
-		}
 		return 1;
-	} catch (secret_listener::pcap_open_error& e)
+	} catch (const secret_listener::pcap_open_error& e)
 	{
 		if ( string const* error_str=boost::get_error_info<secret_listener::pt_error_info>(e) )
 			cerr << "pcap_open_error: " << *error_str << endl;
-	} catch (secret_listener::pcap_lookupnet_error& e)
+		return 1;
+	} catch (const secret_listener::pcap_lookupnet_error& e)
 	{
 		if ( string const* error_str=boost::get_error_info<secret_listener::pt_error_info>(e) )
 			cerr << "pcap_lookupnet_error: " << *error_str << endl;
-	} catch (secret_listener::pcap_compile_error& e)
+		return 1;
+	} catch (const secret_listener::pcap_compile_error& e)
 	{
 		if ( string const* error_str=boost::get_error_info<secret_listener::pt_error_info>(e) )
 			cerr << "pcap_compile_error: " << *error_str << endl;
-	} catch (secret_listener::pcap_setfilter_error& e)
+		return 1;
+	} catch (const secret_listener::pcap_setfilter_error& e)
 	{
 		if ( string const* error_str=boost::get_error_info<secret_listener::pt_error_info>(e) )
 			cerr << "pcap_setfilter_error: " << *error_str << endl;
+		return 1;
 	}
 
 	return 0;

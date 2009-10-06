@@ -37,11 +37,11 @@ class WrapEthernet
 public:
 	WrapEthernet(const u_char* const payload, const int& length);
 	virtual ~WrapEthernet();
-	const u_char * const getPayload() const { return payload; };
+	const u_char * getPayload() const { return payload; };
 	u_int getPayloadLength() const { return payload_length; };
 	u_short getType() const { return ntohs(ethernet.ether_type); };
 private:
-	struct ether_header ethernet;
+	const struct ether_header ethernet;
 	const u_char * const payload;
 	const u_int payload_length;
 };

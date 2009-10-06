@@ -43,7 +43,7 @@ void
 AppPacketReceiver::onPacket(const WrapList& wrapList)
 {
 	std::cout << "----------------------------------------------------------------------" << std::endl;
-	WrapPrinter printer(std::cout);
+	const WrapPrinter printer(std::cout);
 
 	BOOST_FOREACH( const WrapVariant& wrap, wrapList )
 	{

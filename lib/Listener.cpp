@@ -29,7 +29,7 @@ THE SOFTWARE.
 namespace secret_listener
 {
 
-Listener::Listener(const PacketDevice& device, PacketHandler& handler) : pcap_device(device), packet_handler(handler)
+Listener::Listener(const PacketDevice& device, PacketHandler& handler) : pcap_device(device), packet_handler(handler), is_capturing_(false)
 {
 
 }
@@ -37,23 +37,31 @@ Listener::Listener(const PacketDevice& device, PacketHandler& handler) : pcap_de
 void
 Listener::capture()
 {
-	pcap_loop( pcap_device, 0, pcap_loop_callback, reinterpret_cast<u_char*>(this) );
+	if(!is_capturing_)
+	{
+		is_capturing_ = true;
+		pcap_loop( pcap_device, 0, pcap_loop_callback, reinterpret_cast<u_char*>(this) );
+	}
 }
 
 void
 Listener::stop()
 {
-	pcap_breakloop( pcap_device );
+	if(is_capturing_)
+	{
+		is_capturing_ = false;
+		pcap_breakloop( pcap_device );
+	}
 }
 
 
 
 void
-Listener::packetHandler(WrapVariant wrap)
+Listener::packetHandler(WrapVariant& wrap)
 {
-	WrapVariantIsA<WrapPayload> wrapIsPayload;
+	const WrapVariantIsA<WrapPayload> wrapIsPayload;
 	WrapList wrappedList;
-	WrapBuilder builder;
+	const WrapBuilder builder;
 
 	WrapVariant wrapped = wrap;
 	while(!boost::apply_visitor( wrapIsPayload, wrapped) )

@@ -31,7 +31,7 @@ public:
 	PcapPayload(const size_t& length, const u_char * const data);
 	virtual ~PcapPayload();
 
-	operator const u_char * const () const {
+	operator const u_char * () const {
 		return payload;
 	}
 private:

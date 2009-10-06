@@ -39,7 +39,7 @@ class WrapIP
 public:
 	WrapIP(const u_char* const payload, const int& length);
 	virtual ~WrapIP();
-	const u_char * const getPayload() const { return payload; };
+	const u_char * getPayload() const { return payload; };
 	u_int getPayloadLength() const { return payload_length; };
 
 	u_int getHeaderLength() const { return internet_protocol.ip_hl*4; };

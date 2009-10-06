@@ -33,7 +33,7 @@ public:
 	WrapPayload(const u_char* const payload, const int& length) : payload(payload), payload_length(length) {}
 	~WrapPayload() {};
 
-	const u_char * const getPayload() const { return payload; };
+	const u_char * getPayload() const { return payload; };
 	u_int getPayloadLength() const { return payload_length; };
 
 private:

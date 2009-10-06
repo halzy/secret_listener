@@ -56,7 +56,7 @@ PacketDevice::setPacketFilter(const std::string& filter)
 		throw pcap_lookupnet_error() << pt_error_info(std::string(pcap_errorbuf));
 	}
 
-	if (pcap_compile(pcap_handle, &compiled_filter, (char*) filter.c_str(), 0, device_ip) == -1)
+	if (pcap_compile(pcap_handle, &compiled_filter, const_cast<char*>(filter.c_str()), 0, device_ip) == -1)
 	{
 		throw pcap_compile_error() << pt_error_info(std::string(pcap_geterr(pcap_handle)));
 	}

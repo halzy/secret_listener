@@ -39,7 +39,7 @@ public:
 	WrapPcap(const int& link_type, const struct pcap_pkthdr * const header, const u_char * const bytes);
 	virtual ~WrapPcap();
 
-	const u_char* const getPayload() const { return payload; };
+	const u_char* getPayload() const { return payload; };
 	u_int getPayloadLength() const { return header.caplen; };
 	u_int getPacketLength() const { return header.len; };
 	const struct timeval getTime() const { return header.ts; };

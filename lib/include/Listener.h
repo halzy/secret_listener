@@ -44,12 +44,12 @@ private:
 
 	static void pcap_loop_callback(u_char * const user, const struct pcap_pkthdr * const header, const u_char * const bytes)
 	{
-		Listener* listener = reinterpret_cast<Listener*> (user);
+		Listener * const listener = reinterpret_cast<Listener*const> (user);
 		WrapVariant wrap = boost::shared_ptr<WrapPcap>(new WrapPcap(listener->pcap_device.getDatalinkType(), header, bytes));
 		listener->packetHandler(wrap);
 	}
 
-	void packetHandler(WrapVariant wrap);
+	void packetHandler(WrapVariant& wrap);
 
 	// [bgh] we do not want people to copy this object
 	Listener(Listener const&);
@@ -57,6 +57,7 @@ private:
 
 	const PacketDevice& pcap_device;
 	PacketHandler& packet_handler;
+	bool is_capturing_;
 };
 
 }
